@@ -1,0 +1,18 @@
+<svg width="1140" height="800" xmlns="http://www.w3.org/2000/svg">
+ <title>Seat</title>
+
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_2" height="102" width="209.99999" y="116" x="89.71427" stroke="#000" fill="#fff"/>
+  <rect id="svg_4" height="102" width="209.99999" y="596" x="90" stroke="#000" fill="#fff"/>
+  <rect id="svg_5" height="102" width="209.99999" y="356" x="90" stroke="#000" fill="#fff"/>
+  <rect id="svg_6" height="102" width="105" y="116" x="420" stroke="#000" fill="#fff"/>
+  <rect id="svg_7" height="102" width="105" y="596" x="420" stroke="#000" fill="#fff"/>
+  <rect id="svg_8" height="102" width="105" y="356" x="420" stroke="#000" fill="#fff"/>
+  <rect id="svg_9" height="102" width="105" y="116" x="645" stroke="#000" fill="#fff"/>
+  <rect id="svg_10" height="102" width="105" y="596" x="645" stroke="#000" fill="#fff"/>
+  <rect id="svg_11" height="102" width="105" y="356" x="645" stroke="#000" fill="#fff"/>
+  <rect transform="rotate(90 964 219)" id="svg_12" height="102" width="209.99999" y="168" x="858.99994" stroke="#000" fill="#fff"/>
+  <rect transform="rotate(90 964 597)" id="svg_13" height="102" width="209.99999" y="546" x="858.99994" stroke="#000" fill="#fff"/>
+ </g>
+</svg>
