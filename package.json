@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/node": "^20.2.6",
+    "axios": "^1.4.0",
     "vue": "^3.2.47",
     "vue-ctk-date-time-picker": "3.0.0-alpha.0"
   },

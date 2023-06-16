@@ -1,7 +1,7 @@
 <template>
     <div class="grid grid-cols-3 gap-3">
-        <p class="col-span-2 text-xl font-bold">用餐人數</p>
-        <p class="text-xl font-bold">訂位日期</p>
+        <p class="col-span-2 text-xl font-bold mt-7">用餐人數</p>
+        <p class="text-xl font-bold mt-7">訂位日期</p>
         <select name="aldult" class="text-center rounded-sm border-2">
             <option selected  value="null">請選擇用餐人數</option>
             <option v-for="i in 30" :value=i>{{i}}位大人</option>
@@ -24,14 +24,13 @@ import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 const YesBoolean = ref(true)
 const UserChoose = ref("")
 const DateFormat = ref("YYYY-MM-DD")
-
 // Set minDate and MaxDate
 const currentDate = new Date()
 const minDate = currentDate.toISOString().split('T')[0]
 currentDate.setDate(currentDate.getDate()+29)
 const maxDate = currentDate.toISOString().split('T')[0]
 
-
+defineExpose({UserChoose})
 
 </script>
 
