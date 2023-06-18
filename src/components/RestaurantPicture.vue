@@ -35,6 +35,3 @@ function imgOnload(e:any) {
 }
 
 </script>
-
-<style>
-</style>
