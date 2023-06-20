@@ -17,7 +17,7 @@
             </div>
             <p class="text-lg col-span-12">訂位人手機號碼</p>
             <input type="text" class="mr-2 pl-2 text-justify rounded-md border-2 h-10 col-span-10" v-model="phone"/>
-            <button class="col-span-12 rounded-md w-1/6 bg-cyan-100 place-self-center" @click="submit()">確認</button>
+            <button class="col-span-12 rounded-md w-1/6 bg-cyan-100 place-self-center" @click="submit($event)">確認</button>
         </form>
     </div>
 </template>
@@ -26,13 +26,15 @@
 import { ref } from 'vue';
 import { OrderData } from '@/store';
 import axios from 'axios';
+import {router} from '@/router'
 
 const gender = ref<number>()
 const name = ref<string>()
 const phone = ref<string>()
 
-async function submit() {
-    const {data} = await axios.post("/api/tables/order",{
+async function submit(event : any) {
+    event.preventDefault()
+    const data = await axios.post("/api/tables/order",{
             Name: name.value,
             Gender: gender.value,
             Phone: phone.value,
@@ -47,7 +49,11 @@ async function submit() {
                 'Content-Type': 'application/json'
             }
         })
-    alert("Data:"+data)
+
+    if( data != undefined ) {
+        alert("訂位成功！")
+        router.push('/')
+    }
 }
 
 </script>
