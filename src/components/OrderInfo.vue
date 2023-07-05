@@ -34,7 +34,7 @@ const phone = ref<string>()
 
 async function submit(event : any) {
     event.preventDefault()
-    const data = await axios.post("/api/tables/order",{
+    const data = await axios.post("/api/order/seat",{
             Name: name.value,
             Gender: gender.value,
             Phone: phone.value,

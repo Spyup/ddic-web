@@ -2,11 +2,11 @@
     <div class="grid grid-cols-3 gap-3">
         <p class="col-span-2 text-xl font-bold mt-7">用餐人數</p>
         <p class="text-xl font-bold mt-7">訂位日期</p>
-        <select name="aldult" v-model="aldult" @change="changeAldult($event)" class="text-center rounded-sm border-2">
+        <select name="aldult" v-model="aldult" class="text-center rounded-sm border-2">
             <option selected :value=0>請選擇用餐人數</option>
             <option v-for="i in 30" :value=i>{{i}}位大人</option>
         </select>
-        <select name="child" v-model="child" @change="changeChild($event)" class="text-center rounded-sm border-2">
+        <select name="child" v-model="child" class="text-center rounded-sm border-2">
             <option selected :value=0>0位孩童</option>
             <option v-for="i in 15" :value=i>{{i}}位孩童</option>
         </select>
@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 // Import package
-import {ref, watch} from "vue"
+import {ref} from "vue"
 import VueCtkTimeDatePicker from "vue-ctk-date-time-picker"
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 
@@ -33,18 +33,6 @@ const maxDate = currentDate.toISOString().split('T')[0]
 let date = ref<string>()
 let aldult = ref<number>(0)
 let child = ref<number>(0)
-
-function changeAldult(e : any) {
-    aldult = e.currentTarget.value
-}
-
-function changeChild(e : any) {
-    child = e.currentTarget.value
-}
-
-watch(date,() => {
-    console.log("In Component Date: ",date)
-})
 
 defineExpose({
     "date":date,

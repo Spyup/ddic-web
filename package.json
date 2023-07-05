@@ -11,6 +11,7 @@
   "dependencies": {
     "@types/node": "^20.2.6",
     "axios": "^1.4.0",
+    "dayjs": "^1.11.8",
     "vue": "^3.2.47",
     "vue-ctk-date-time-picker": "3.0.0-alpha.0",
     "vue-router": "4"
@@ -31,6 +32,7 @@
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.2",
     "vite": "^4.3.9",
+    "vue-loader": "^17.2.2",
     "vue-tsc": "^1.4.2"
   }
 }
