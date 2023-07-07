@@ -4,8 +4,9 @@ import {join} from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "./",
   server: {
-    host: "0.0.0.0",
+    cors: true,
     proxy: {
       '^/api': {
         target: 'http://shihyan.nmg.cs.thu.edu.tw:8001/',

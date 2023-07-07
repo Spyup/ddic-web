@@ -23,6 +23,7 @@
                 </tr>
             </tbody>
         </table>
+        <PopInfo :isOpen="isOpen" @close="isOpen = false" :name="showBooking?.Name" :phone="showBooking?.Phone" :gender="showBooking?.Gender" :date="showBooking?.Date" :time="showBooking?.Time" :aldult="showBooking?.Aldult" :children="showBooking?.Child" :table="showBooking?.Table"/>
     </div>
 </template>
   
@@ -32,6 +33,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import advancedFormat from 'dayjs/plugin/advancedFormat';
 import axios from 'axios';
+import PopInfo from '@/components/PopInfo.vue';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(advancedFormat);
@@ -42,6 +44,8 @@ interface Booking {
     Gender: number
     Date: string
     Time: string
+    Aldult: number
+    Child: number
     Table: Array<number>
     Remark: string
     Notify: number    
@@ -49,6 +53,8 @@ interface Booking {
   
 const tables = ref(['1', '2', '3', '4', '5', '6', '7', '8']);
 const bookings = ref<Booking[]>([]);
+const showBooking = ref<Booking>();
+const isOpen = ref(false);
 
 const slots = ref([
     '11:00','11:15','11:30','11:45',
@@ -67,27 +73,29 @@ const slots = ref([
 let selectedDate = ref(dayjs()); // 預設選擇當天的日期
 
 const isBooked = (start: string, table: string) => {
-    console.log(selectedDate.value.format('YYYY-MM-DD'))
-  const booking = bookings.value.find(b => selectedDate.value.format('YYYY-MM-DD') === b.Date && start == b.Time && b.Table.find(b => b===Number(table)) );
+    const booking = bookings.value.find(b => selectedDate.value.format('YYYY-MM-DD') === b.Date && start == b.Time && b.Table.find(b => b===Number(table)) );
 
-  return !!booking;
+    return !!booking;
 };
 
 const hasBooked = (start: string, table: string) => {
-  const booking = bookings.value.find(b => selectedDate.value.format('YYYY-MM-DD') === b.Date && start > b.Time && start<=add90Minutes(b.Time) && b.Table.find(b => b===Number(table)));
+    const booking = bookings.value.find(b => selectedDate.value.format('YYYY-MM-DD') === b.Date && start > b.Time && start<=add90Minutes(b.Time) && b.Table.find(b => b===Number(table)));
 
-  return !booking;
+    return !booking;
 };
 
 const getBookingInfo = (start: string, table: string) => {
-  const booking = bookings.value.find(b => selectedDate.value.format('YYYY-MM-DD') === b.Date && start == b.Time && b.Table.find(b => b===Number(table)));
+    const booking = bookings.value.find(b => selectedDate.value.format('YYYY-MM-DD') === b.Date && start == b.Time && b.Table.find(b => b===Number(table)));
 
-  return booking ? booking.Name : '';
+    return booking ? booking.Name : '';
 };
   
-const handleCellClick = (time: string, hour: string) => {
-    // 在此處處理點擊事件
-    console.log('點擊了：', time, hour);
+const handleCellClick = (start: string, table: string) => {
+    const booking = bookings.value.find(b => selectedDate.value.format('YYYY-MM-DD') === b.Date && start == b.Time && b.Table.find(b => b===Number(table)));
+    if(booking){
+        showBooking.value = booking
+        isOpen.value = true
+    }
 };
 
 const goToPreviousDay = () => {

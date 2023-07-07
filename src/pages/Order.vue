@@ -10,4 +10,5 @@
 import CheckCard from '@/components/CheckCard.vue';
 import OrderInfo from '@/components/OrderInfo.vue';
 
+
 </script>

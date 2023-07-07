@@ -66,7 +66,7 @@ onUpdated(() => {
                 child: prop.child
             }
         }).then((response) => {
-            const emptySeat = response.data['Empty']
+            const emptySeat:Array<string> = response.data.Empty
             for(var i=0; i<emptySeat.length; i++) {
                 if (noonButton.get(emptySeat[i]) === false) {
                     noonButton.set(emptySeat[i],true)

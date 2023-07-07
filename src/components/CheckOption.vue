@@ -8,18 +8,25 @@
         <p class="col-span-2 ml-4">{{ prop.seat.sort().toString() }}</p>
         <p v-if="prop.date!=''" class="col-span-2 ml-4">選擇的日期：{{ prop.date }}</p>
         <p v-if="prop.time!=''" class="col-span-2 ml-4">選擇的時間：{{ prop.time }}</p>
-        <router-link v-if="prop.pages == 'Order'" :to="{name:'Order'}" class="m-4 col-span-2 place-self-center">
-            <button @click="changeData()" class="px-10 rounded-lg shadow-lg bg-sky-100 hover:bg-sky-300 focus:bg-sky-500">確認</button>
-        </router-link>
+        <button v-if="prop.pages == 'Order'" @click="changeData()" class="m-4 col-span-2 place-self-center px-10 rounded-lg shadow-lg bg-sky-100 hover:bg-sky-300 focus:bg-sky-500">確認</button>
         <div v-if="prop.pages == 'Live'" class="m-4 col-span-2 place-self-center">
             <button @click="postOrder($event)" class="px-10 rounded-lg shadow-lg bg-sky-100 hover:bg-sky-300 focus:bg-sky-500">確認</button>
         </div>
+        <PopAlert v-if="prop.pages == 'Order'" :isOpen="isOpen" :title="modalTitle" :message="modalMessage" @close="isOpen = false"/>
+        <PopAlert v-if="prop.pages == 'Live'" :isOpen="isOpen" :title="modalTitle" :message="modalMessage" @close="closeModal"/>
     </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import axios from 'axios';
 import { OrderData } from '@/store';
+import PopAlert from "@/components/PopAlert.vue";
+import { router } from "@/router"
+
+const isOpen = ref(false)
+const modalTitle = ref('錯誤')
+const modalMessage = ref('座位人數與用餐人數不符！！！！')
 
 const prop = defineProps({
     aldult: {
@@ -52,38 +59,81 @@ const prop = defineProps({
     }
 })
 
-function changeData() {
-    OrderData.aldult = prop.aldult
-    OrderData.children = prop.child
-    OrderData.date = prop.date
-    OrderData.time = prop.time
-    OrderData.table = prop.seat.sort()
+async function caculatePeople():Promise<boolean> {
+    const people = prop.aldult + prop.child
+    let tablePeople = 0
+
+    for (let i=0; i<prop.seat.length; i++) {
+        if( prop.seat[i] == 2 || prop.seat[i] == 3 || prop.seat[i] == 6 || prop.seat[i] == 7 ) {
+            tablePeople += 2
+        }
+        else {
+            tablePeople += 4
+        }
+    }
+
+    if( (people <= tablePeople) && (tablePeople-people < 2) ) {
+        return true
+    }
+    else return false
 }
 
-async function postOrder(event : any) {
-    event.preventDefault()
-    const now = new Date()
-    const liveDate = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate()
-    const liveTime = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds()
-
-    const data = await axios.post("/api/order/seat",{
-            Name: prop.name,
-            Gender: 3,
-            Phone: '0900000000',
-            Table: OrderData.table,
-            Aldult: OrderData.aldult,
-            Child: OrderData.children,
-            Date: liveDate,
-            Time: liveTime,
-            Remark: ""
-        },{
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-
-    if( data != undefined ) {
-        alert("訂位成功！")
+async function changeData() {
+    const check = await caculatePeople()
+    if(check) {
+        OrderData.aldult = prop.aldult
+        OrderData.children = prop.child
+        OrderData.date = prop.date
+        OrderData.time = prop.time
+        OrderData.table = prop.seat.sort()
+        router.push('/Order')
+    }
+    else {
+        isOpen.value = true
     }
 }
+async function postOrder(event : any) {
+    event.preventDefault()
+    const check = await caculatePeople()
+
+    if(check) {
+        const now = new Date()
+        const liveDate = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate()
+        const liveTime = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds()
+
+        const data = await axios.post("/api/order/seat",{
+                Name: prop.name,
+                Gender: 3,
+                Phone: '0900000000',
+                Table: OrderData.table,
+                Aldult: OrderData.aldult,
+                Child: OrderData.children,
+                Date: liveDate,
+                Time: liveTime,
+                Remark: ""
+            },{
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+        if( data != undefined ) {
+            modalTitle.value = '成功'
+            modalMessage.value = '訂位成功！'
+            isOpen.value = true
+        }
+        if( isOpen.value === false ) {
+            router.push('/Live')
+        }
+    }
+    else {
+        isOpen.value = true
+    }
+}
+
+async function closeModal() {
+    router.push('/Live')
+}
+
+
 </script>

@@ -13,14 +13,14 @@
         <img src="@/assets/user.svg" class="opacity-0"/>
         <img src="@/assets/user.svg" class="opacity-0"/>
         <!-- Row 2 -->
-        <button class="col-span-2 border-2" :class="seatStat.get(1)?disableButton:enableButton" @click="checkTable(1)" :disabled="seatStat.get(1)">1</button>
+        <button class="col-span-2 border-2" :class="[seatStat.get(1)?disableButton:enableButton,{'bg-sky-500':seat.indexOf(1)!=-1}]" @click="checkTable(1)" :disabled="seatStat.get(1)">1</button>
         <img src="@/assets/user.svg" class="opacity-0"/>
-        <button class="border-2" :class="seatStat.get(2)?disableButton:enableButton" @click="checkTable(2)" :disabled="seatStat.get(2)">2</button>
+        <button class="border-2" :class="[seatStat.get(2)?disableButton:enableButton,{'bg-sky-500':seat.indexOf(2)!=-1}]" @click="checkTable(2)" :disabled="seatStat.get(2)">2</button>
         <img src="@/assets/user.svg" class="opacity-0"/>
-        <button class="border-2" :class="seatStat.get(3)?disableButton:enableButton" @click="checkTable(3)" :disabled="seatStat.get(3)">3</button>
+        <button class="border-2" :class="[seatStat.get(3)?disableButton:enableButton,{'bg-sky-500':seat.indexOf(3)!=-1}]" @click="checkTable(3)" :disabled="seatStat.get(3)">3</button>
         <img src="@/assets/user.svg" class="opacity-0"/>
         <img src="@/assets/user.svg"/>
-        <button class="row-span-2 border-2" :class="seatStat.get(4)?disableButton:enableButton" @click="checkTable(4)" :disabled="seatStat.get(4)">4</button>
+        <button class="row-span-2 border-2" :class="[seatStat.get(4)?disableButton:enableButton,{'bg-sky-500':seat.indexOf(4)!=-1}]" @click="checkTable(4)" :disabled="seatStat.get(4)">4</button>
         <img src="@/assets/user.svg"/>
         <img src="@/assets/user.svg" class="opacity-0"/>
         <!-- Row 3 -->
@@ -59,14 +59,14 @@
         <img src="@/assets/user.svg" class="opacity-0"/>
         <!-- Row 6 -->
         <img src="@/assets/user.svg" class="opacity-0"/>
-        <button class="col-span-2 border-2" :class="seatStat.get(5)?disableButton:enableButton" @click="checkTable(5)" :disabled="seatStat.get(5)">5</button>
+        <button class="col-span-2 border-2" :class="[seatStat.get(5)?disableButton:enableButton,{'bg-sky-500':seat.indexOf(5)!=-1}]" @click="checkTable(5)" :disabled="seatStat.get(5)">5</button>
         <img src="@/assets/user.svg" class="opacity-0"/>
-        <button class="border-2" :class="seatStat.get(6)?disableButton:enableButton" @click="checkTable(6)" :disabled="seatStat.get(6)">6</button>
+        <button class="border-2" :class="[seatStat.get(6)?disableButton:enableButton,{'bg-sky-500':seat.indexOf(6)!=-1}]" @click="checkTable(6)" :disabled="seatStat.get(6)">6</button>
         <img src="@/assets/user.svg" class="opacity-0"/>
-        <button class="border-2" :class="seatStat.get(7)?disableButton:enableButton" @click="checkTable(7)" :disabled="seatStat.get(7)">7</button>
+        <button class="border-2" :class="[seatStat.get(7)?disableButton:enableButton,{'bg-sky-500':seat.indexOf(7)!=-1}]" @click="checkTable(7)" :disabled="seatStat.get(7)">7</button>
         <img src="@/assets/user.svg" class="opacity-0"/>
         <img src="@/assets/user.svg"/>
-        <button class="row-span-2 border-2" :class="seatStat.get(8)?disableButton:enableButton" @click="checkTable(8)" :disabled="seatStat.get(8)">8</button>
+        <button class="row-span-2 border-2" :class="[seatStat.get(8)?disableButton:enableButton,{'bg-sky-500':seat.indexOf(8)!=-1}]" @click="checkTable(8)" :disabled="seatStat.get(8)">8</button>
         <img src="@/assets/user.svg"/>
         <img src="@/assets/user.svg" class="opacity-0"/>
         <!-- Row 7 -->
@@ -94,7 +94,7 @@ var seatStat = new Map([
 const seat = ref<Number[]>([])
 
 const disableButton = ref("bg-sky-900")
-const enableButton = ref("bg-sky-100 hover:bg-sky-300 focus:bg-sky-500")
+const enableButton = ref("bg-sky-100 hover:bg-sky-300")
 
 const prop = defineProps({
     sumOfPeople: {
